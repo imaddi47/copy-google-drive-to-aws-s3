@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>build.drop · mobile-apps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Fragment+Mono:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="aurora" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M3 8h11l-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 16H10l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="brand-text">
+            <span class="brand-title">build.drop</span>
+            <span class="brand-sub">// mobile apps · china</span>
+          </span>
+        </a>
+
+        <nav class="status-rail" aria-label="System status">
+          <span class="status-chip" id="status-drive" data-state="off">
+            <span class="chip-dot"></span>
+            <span class="chip-label">drive</span>
+          </span>
+          <span class="chip-sep">·</span>
+          <span class="status-chip" id="status-s3" data-state="off">
+            <span class="chip-dot"></span>
+            <span class="chip-label">s3</span>
+          </span>
+          <span class="chip-sep">·</span>
+          <span class="status-chip" id="status-env" data-state="off">
+            <span class="chip-dot"></span>
+            <span class="chip-label" id="status-env-label">env</span>
+          </span>
+        </nav>
+      </div>
+
+      <div class="topbar-right">
+        <span id="user-info" class="user-info"></span>
+        <button id="auth-btn" class="btn btn-primary">
+          Link Google Drive
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="workbench">
+      <!-- ════════════════════ SOURCE / DRIVE ════════════════════ -->
+      <section class="panel panel-source" id="drive-panel">
+        <header class="panel-head">
+          <div class="panel-id">
+            <span class="panel-tag">source · 01</span>
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 87.3 78" fill="none" aria-hidden="true">
+                <path d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z" fill="#0066da"/>
+                <path d="m43.65 25-13.75-23.8c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44a9.06 9.06 0 0 0 -1.2 4.5h27.5z" fill="#00ac47"/>
+                <path d="m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5h-27.502l5.852 11.5z" fill="#ea4335"/>
+                <path d="m43.65 25 13.75-23.8c-1.35-.8-2.9-1.2-4.5-1.2h-18.5c-1.6 0-3.15.45-4.5 1.2z" fill="#00832d"/>
+                <path d="m59.8 53h-32.3l-13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h50.8c1.6 0 3.15-.45 4.5-1.2z" fill="#2684fc"/>
+                <path d="m73.4 26.5-12.7-22c-.8-1.4-1.95-2.5-3.3-3.3l-13.75 23.8 16.15 28h27.45c0-1.55-.4-3.1-1.2-4.5z" fill="#ffba00"/>
+              </svg>
+              Google&nbsp;Drive
+            </h2>
+          </div>
+          <div class="panel-tools">
+            <div class="search-wrap">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+              <input
+                id="drive-search"
+                type="search"
+                placeholder="filter files…"
+                aria-label="Search Drive files"
+              />
+            </div>
+            <button id="drive-refresh" class="icon-btn" title="Refresh" aria-label="Refresh">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <form class="location-bar" id="drive-location-form" autocomplete="off">
+          <span class="location-mark" aria-hidden="true">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6l2 2h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z"/></svg>
+          </span>
+          <input
+            id="drive-location-input"
+            type="text"
+            placeholder="paste folder URL or ID — e.g. drive.google.com/drive/folders/…"
+            aria-label="Drive folder location"
+            spellcheck="false"
+          />
+          <button type="submit" class="location-go" title="Open folder" aria-label="Open folder">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <nav class="breadcrumbs" id="drive-breadcrumbs" aria-label="Drive path"></nav>
+
+        <div class="filelist" id="drive-list">
+          <div class="empty">
+            <div class="empty-glyph">◇</div>
+            <p>Link Google Drive to load source files.</p>
+          </div>
+        </div>
+
+        <footer class="panel-foot">
+          <div class="queue-meta">
+            <span class="queue-glyph"></span>
+            <span class="queue-label" id="drive-selection-count">queue empty</span>
+          </div>
+          <button id="upload-btn" class="btn btn-action" disabled>
+            <span>Initiate transfer</span>
+            <span class="btn-arrow">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </span>
+          </button>
+        </footer>
+      </section>
+
+      <!-- ════════════════════ TARGET / S3 ════════════════════ -->
+      <section class="panel panel-target" id="s3-panel">
+        <header class="panel-head">
+          <div class="panel-id">
+            <span class="panel-tag">target · 02</span>
+            <h2>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M2 7v10c0 1 8 4 10 4s10-3 10-4V7" stroke="#FBBF24" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M2 7c0-1 8-4 10-4s10 3 10 4-8 4-10 4S2 8 2 7Z" stroke="#FBBF24" stroke-width="1.6" stroke-linejoin="round"/>
+                <path d="M2 12c0 1 8 4 10 4s10-3 10-4" stroke="#FBBF24" stroke-width="1.6" stroke-linejoin="round" opacity=".5"/>
+              </svg>
+              AWS&nbsp;S3
+            </h2>
+          </div>
+          <div class="panel-tools">
+            <button id="s3-refresh" class="icon-btn" title="Refresh" aria-label="Refresh">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+            </button>
+          </div>
+        </header>
+
+        <form class="location-bar" id="s3-location-form" autocomplete="off">
+          <span class="location-mark" aria-hidden="true">s3://</span>
+          <input
+            id="s3-location-input"
+            type="text"
+            placeholder="bucket/path/  ·  or  bucket@region/path/  to override per-request"
+            aria-label="S3 bucket and prefix"
+            spellcheck="false"
+          />
+          <div class="region-picker" title="Default region used when the location bar omits @region">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a14 14 0 0 1 0 18"/><path d="M12 3a14 14 0 0 0 0 18"/></svg>
+            <select id="s3-region-select" aria-label="AWS region">
+              <option value="">…</option>
+            </select>
+          </div>
+          <button type="submit" class="location-go" title="Open location" aria-label="Open location">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </form>
+
+        <nav class="breadcrumbs" id="s3-breadcrumbs" aria-label="S3 path"></nav>
+
+        <div class="filelist" id="s3-list">
+          <div class="empty">
+            <div class="empty-glyph">◇</div>
+            <p>Loading bucket…</p>
+          </div>
+        </div>
+
+        <footer class="panel-foot">
+          <span class="path-display mono" id="s3-path-display"></span>
+          <div class="s3-selection-actions hidden" id="s3-selection-actions">
+            <span class="selection-pill" id="s3-selection-count">0 selected</span>
+            <button type="button" class="btn btn-ghost btn-sm" id="s3-selection-clear">Clear</button>
+            <button type="button" class="btn btn-danger btn-sm" id="bulk-delete-btn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              <span>Delete</span>
+            </button>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <!-- ════════════════════ CONFIRM TRANSFER MODAL ════════════════════ -->
+    <div class="modal-overlay hidden" id="rename-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal">
+        <header class="modal-head">
+          <div>
+            <span class="modal-tag">confirm transfer</span>
+            <h3 id="modal-title">Review filenames before upload</h3>
+            <p class="modal-target mono" id="modal-target-path"></p>
+          </div>
+          <button class="modal-close" id="modal-close" aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </header>
+
+        <div class="modal-helper">
+          <p>
+            Edit any row to rename the file in S3.
+            Rows highlighted <span class="warn-inline">amber</span> already exist at the target and will be overwritten.
+          </p>
+          <button class="btn btn-ghost btn-sm" id="reset-names-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/></svg>
+            Reset to original
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="rename-list" id="rename-list"></div>
+        </div>
+
+        <footer class="modal-foot">
+          <button class="btn btn-ghost" id="cancel-upload">Cancel</button>
+          <button class="btn btn-action" id="confirm-upload">
+            <span>Authorize upload</span>
+            <span class="confirm-pill"><span id="confirm-count"></span> <span class="confirm-pill-lab">files</span></span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ════════════════════ DELETE OBJECT MODAL ════════════════════ -->
+    <div class="modal-overlay hidden" id="delete-modal" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+      <div class="modal modal-danger">
+        <header class="modal-head">
+          <div>
+            <span class="modal-tag danger" id="delete-modal-tag">delete object</span>
+            <h3 id="delete-modal-title">Permanently delete this object?</h3>
+            <p class="modal-target mono" id="delete-modal-key"></p>
+          </div>
+          <button class="modal-close" id="delete-modal-close" aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </header>
+
+        <div class="modal-helper">
+          <p>
+            <span class="mono" id="delete-modal-meta"></span><br>
+            This permanently removes the object. If the bucket has versioning enabled a delete marker is created; otherwise the bytes are gone.
+            <strong>This action cannot be undone.</strong>
+          </p>
+        </div>
+
+        <footer class="modal-foot">
+          <button class="btn btn-ghost" id="delete-cancel">Cancel</button>
+          <button class="btn btn-danger" id="delete-confirm">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+            <span>Delete object</span>
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- ════════════════════ PROGRESS DRAWER ════════════════════ -->
+    <aside class="progress-drawer hidden" id="progress-drawer" aria-live="polite">
+      <header class="progress-head">
+        <div>
+          <span class="modal-tag">active transfers</span>
+          <h3 id="progress-title">Uploading</h3>
+        </div>
+        <button class="modal-close" id="progress-close" aria-label="Hide">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </header>
+      <div class="progress-summary mono" id="progress-summary"></div>
+      <div class="progress-list" id="progress-list"></div>
+    </aside>
+
+    <span id="config-status" class="visually-hidden"></span>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
